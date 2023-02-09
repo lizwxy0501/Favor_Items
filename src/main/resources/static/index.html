@@ -1,0 +1,346 @@
+<!--<!DOCTYPE html>-->
+<!--<html lang="en">-->
+<!--<head>-->
+<!--    <meta charset="UTF-8">-->
+<!--    <title>User-info</title>-->
+<!--    <link rel="stylesheet" href="element.css">-->
+<!--</head>-->
+<!--<body>-->
+<!--<div id="app" style="width: 80%; margin: 0 auto">-->
+<!--    <h2>Users</h2>-->
+
+<!--        <el-row>-->
+<!--        <el-col :span="6" style="margin-bottom: 10px">-->
+<!--            <el-button type="primary" @click="add">Add</el-button>-->
+<!--            <el-input v-model="name" style="width: 70%" @keyup.enter.native="loadTable(1)"></el-input>-->
+<!--        </el-col>-->
+<!--    </el-row>-->
+
+
+<!--<el-table-->
+<!--    :data="page.content"-->
+<!--    stripe-->
+<!--    border-->
+<!--    style="width: 100%"-->
+<!--    :row-class-name="tableRowClassName">-->
+<!--    <el-table-column-->
+<!--      prop="name"-->
+<!--      label="Name"-->
+<!--      width="180">-->
+<!--    </el-table-column>-->
+<!--    <el-table-column-->
+<!--      prop="favorNum"-->
+<!--      label="Favorite Number"-->
+<!--      width="180">-->
+<!--    </el-table-column>-->
+<!--    <el-table-column-->
+<!--      prop="favorColor"-->
+<!--      label="Favorite Color">-->
+<!--    </el-table-column>-->
+<!--        <el-table-column-->
+<!--      prop="favorBook"-->
+<!--      label="Favorite Book">-->
+<!--    </el-table-column>-->
+<!--        <el-table-column-->
+<!--      prop="favorMovie"-->
+<!--      label="Favorite Movie">-->
+<!--    </el-table-column>-->
+<!--    <el-table-column-->
+<!--                fixed="edit"-->
+<!--                label="Edit/View"-->
+<!--                width="100">-->
+<!--            <template slot-scope="scope">-->
+<!--                <el-button type="primary" icon="el-icon-edit" size="small" circle @click="edit(scope.row)"></el-button>-->
+<!--                <el-button type="danger" icon="el-icon-delete" size="small" circle @click="del(scope.row.id)"></el-button>-->
+<!--            </template>-->
+<!--        </el-table-column>-->
+<!--  </el-table>-->
+<!--     <el-row type="flex" justify="center" style="margin-top: 10px">-->
+<!--        <el-pagination-->
+<!--                layout="prev, pager, next"-->
+<!--                :page-size="pageSize"-->
+<!--                :current-page="pageNum"-->
+<!--                @prev-click="loadTable"-->
+<!--                @current-change="loadTable"-->
+<!--                @next-click="loadTable"-->
+<!--                :total="page.totalElements">-->
+<!--        </el-pagination>-->
+<!--    </el-row>-->
+<!--      <el-dialog-->
+<!--            title="User Information"-->
+<!--            :visible.sync="dialogVisible"-->
+<!--            width="30%">-->
+<!--        <el-form ref="form" :model="form" label-width="80px">-->
+<!--            <el-form-item label="Name">-->
+<!--                <el-input v-model="form.name"></el-input>-->
+<!--            </el-form-item>-->
+<!--            <el-form-item label="Favorite Number">-->
+<!--                <el-input v-model="form.favorNum"></el-input>-->
+<!--            </el-form-item>-->
+<!--            <el-form-item label="Favorite Color">-->
+<!--                <el-input v-model="form.favorColor"></el-input>-->
+<!--            </el-form-item>-->
+<!--            <el-form-item label="Favorite Book">-->
+<!--                <el-input v-model="form.favorBook"></el-input>-->
+<!--            </el-form-item>-->
+<!--            <el-form-item label="Favorite Movie">-->
+<!--                <el-input v-model="form.favorMovie"></el-input>-->
+<!--            </el-form-item>-->
+<!--        </el-form>-->
+<!--        <span slot="footer" class="dialog-footer">-->
+<!--            <el-button @click="dialogVisible = false">Cancel</el-button>-->
+<!--            <el-button type="primary" @click="save">Apply</el-button>-->
+<!--        </span>-->
+<!--    </el-dialog>-->
+
+
+<!--</div>-->
+
+<!--<script src="jquery.min.js"></script>-->
+<!--<script src="vue.js"></script>-->
+<!--<script src="element.js"></script>-->
+
+<!--<script>-->
+<!--    new Vue({-->
+<!--        el: '#app',-->
+<!--        data: {-->
+<!--            page: {},-->
+<!--            name: '',-->
+<!--            pageNum: 1,-->
+<!--            pageSize: 8,-->
+<!--            dialogVisible: false,-->
+<!--            form: {}-->
+<!--        },-->
+<!--        created() {-->
+<!--            this.loadTable(this.pageNum);-->
+<!--        },-->
+<!--        methods: {-->
+<!--            loadTable(num) {-->
+<!--                this.pageNum = num;-->
+<!--                $.get("/user/page?pageNum=" + this.pageNum + "&pageSize=" + this.pageSize + "&name=" + this.name).then(res => {-->
+<!--                    this.page = res.data;-->
+<!--                });-->
+<!--            },-->
+<!--            add() {-->
+<!--                this.dialogVisible = true;-->
+<!--                this.form = {};-->
+<!--            },-->
+<!--            edit(row) {-->
+<!--                this.form = row;-->
+<!--                this.dialogVisible = true;-->
+<!--            },-->
+<!--            save() {-->
+<!--                let data = JSON.stringify(this.form);-->
+<!--                if (this.form.id) {-->
+<!--                    // 编辑-->
+<!--                    $.ajax({-->
+<!--                        url: '/user',-->
+<!--                        type: 'put',-->
+<!--                        contentType: 'application/json',-->
+<!--                        data: data-->
+<!--                    }).then(res => {-->
+<!--                        this.dialogVisible = false;-->
+<!--                        this.loadTable(1);-->
+<!--                    })-->
+<!--                } else {-->
+<!--                    // 新增-->
+<!--                    $.ajax({-->
+<!--                        url: '/user',-->
+<!--                        type: 'post',-->
+<!--                        contentType: 'application/json',-->
+<!--                        data: data-->
+<!--                    }).then(res => {-->
+<!--                        this.dialogVisible = false;-->
+<!--                        this.loadTable(1);-->
+<!--                    })-->
+<!--                }-->
+<!--            },-->
+<!--            del(id) {-->
+<!--                $.ajax({-->
+<!--                    url: '/user/' + id,-->
+<!--                    type: 'delete',-->
+<!--                    contentType: 'application/json'-->
+<!--                }).then(res => {-->
+<!--                    this.loadTable(1);-->
+<!--                })-->
+<!--            }-->
+<!--        }-->
+<!--    })-->
+<!--</script>-->
+
+<!--</body>-->
+<!--</html>-->
+
+<!--welcome page: 8080/index-->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>User information</title>
+    <!-- 引入样式 -->
+    <link rel="stylesheet" href="element.css">
+</head>
+<body>
+<div id="app" style="width: 80%; margin: 0 auto">
+    <h2>All Users</h2>
+
+    <el-row>
+        <el-col :span="6" style="margin-bottom: 10px">
+            <el-button type="primary" @click="add">ADD</el-button>
+            <el-input v-model="name" style="width: 70%" @keyup.enter.native="loadTable(1)"></el-input>
+        </el-col>
+    </el-row>
+
+    <el-table
+            :data="page.content"
+            stripe
+            border
+            style="width: 100%">
+        <el-table-column
+                prop="name"
+                label="Name"
+        >
+        </el-table-column>
+        <el-table-column
+                prop="favorNum"
+                label="favorite number"
+                width="180">
+        </el-table-column>
+        <el-table-column
+                prop="favorColor"
+                label="favorite color">
+        </el-table-column>
+        <el-table-column
+                prop="favorBook"
+                label="favorite book">
+        </el-table-column>
+        <el-table-column
+                prop="favorMovie"
+                label="favorite movie">
+        </el-table-column>
+        <el-table-column
+                fixed="right"
+                label="Edit/View"
+                width="100">
+            <template slot-scope="scope">
+                <el-button type="primary" icon="el-icon-edit" size="small" circle @click="edit(scope.row)"></el-button>
+                <el-button type="danger" icon="el-icon-delete" size="small" circle @click="del(scope.row.id)"></el-button>
+            </template>
+        </el-table-column>
+    </el-table>
+    <el-row type="flex" justify="center" style="margin-top: 10px">
+        <el-pagination
+                layout="prev, pager, next"
+                :page-size="pageSize"
+                :current-page="pageNum"
+                @prev-click="loadTable"
+                @current-change="loadTable"
+                @next-click="loadTable"
+                :total="page.totalElements">
+        </el-pagination>
+    </el-row>
+
+    <el-dialog
+            title="Users"
+            :visible.sync="dialogVisible"
+            width="30%">
+        <el-form ref="form" :model="form" label-width="80px">
+            <el-form-item label="Name">
+                <el-input v-model="form.name"></el-input>
+            </el-form-item>
+            <el-form-item label="favorNum">
+                <el-input v-model="form.favorNum"></el-input>
+            </el-form-item>
+            <el-form-item label="favorColor">
+                <el-input v-model="form.favorColor"></el-input>
+            </el-form-item>
+            <el-form-item label="favorBook">
+                <el-input v-model="form.favorBook"></el-input>
+            </el-form-item>
+            <el-form-item label="favorMovie">
+                <el-input v-model="form.favorMovie"></el-input>
+            </el-form-item>
+        </el-form>
+        <span slot="footer" class="dialog-footer">
+            <el-button @click="dialogVisible = false">Cancel</el-button>
+            <el-button type="primary" @click="save">Apply</el-button>
+        </span>
+    </el-dialog>
+
+</div>
+
+<script src="jquery.min.js"></script>
+<script src="vue.js"></script>
+<!-- 引入组件库 -->
+<script src="element.js"></script>
+
+<script>
+    new Vue({
+        el: '#app',
+        data: {
+            page: {},
+            name: '',
+            pageNum: 1,
+            pageSize: 8,
+            dialogVisible: false,
+            form: {}
+        },
+        created() {
+            this.loadTable(this.pageNum);
+        },
+        methods: {
+            loadTable(num) {
+                this.pageNum = num;
+                $.get("/user/page?pageNum=" + this.pageNum + "&pageSize=" + this.pageSize + "&name=" + this.name).then(res => {
+                    this.page = res.data;
+                });
+            },
+            add() {
+                this.dialogVisible = true;
+                this.form = {};
+            },
+            edit(row) {
+                this.form = row;
+                this.dialogVisible = true;
+            },
+            save() {
+                let data = JSON.stringify(this.form);
+                if (this.form.id) {
+                    // 编辑
+                    $.ajax({
+                        url: '/user',
+                        type: 'put',
+                        contentType: 'application/json',
+                        data: data
+                    }).then(res => {
+                        this.dialogVisible = false;
+                        this.loadTable(1);
+                    })
+                } else {
+                    // 新增
+                    $.ajax({
+                        url: '/user',
+                        type: 'post',
+                        contentType: 'application/json',
+                        data: data
+                    }).then(res => {
+                        this.dialogVisible = false;
+                        this.loadTable(1);
+                    })
+                }
+            },
+            del(id) {
+                $.ajax({
+                    url: '/user/' + id,
+                    type: 'delete',
+                    contentType: 'application/json'
+                }).then(res => {
+                    this.loadTable(1);
+                })
+            }
+        }
+    })
+</script>
+</body>
+</html>
