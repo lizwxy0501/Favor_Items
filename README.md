@@ -1,4 +1,4 @@
-# springbootdemo02
+# Favor_Items
 
 
 This website is designed and developed to record personal hobbies, combining **Spring Boot**, **Vue**, and **MySQL**. The goal of this website is to provide a user-friendly interface where users can easily add, modify, and delete their hobby information.
